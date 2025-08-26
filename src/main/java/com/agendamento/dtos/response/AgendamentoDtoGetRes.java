@@ -1,15 +1,19 @@
-package com.agendamento.dtos.request;
+package com.agendamento.dtos.response;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Setter
 @Getter
-public class CriarAgendamentoDtoPostReq {
+public class AgendamentoDtoGetRes {
 
+    private String codigoAgendamento;
+    private String statusAgendamento;
     private String contaOrigem;
     private String contaDestino;
     private BigDecimal valor;

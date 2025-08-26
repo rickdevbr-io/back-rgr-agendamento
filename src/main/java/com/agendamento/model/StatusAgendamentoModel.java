@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StatusAgendamento {
+public class StatusAgendamentoModel {
 
     @Id
     @Column(name = "codigo_status_agendamento")

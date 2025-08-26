@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Agendamento {
+public class AgendamentoModel {
 
     @Id
     @Column(name = "codigo_agendamento", length = 36)
@@ -24,7 +24,7 @@ public class Agendamento {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "codigo_status_agendamento", nullable = false)
-    private StatusAgendamento statusAgendamento;
+    private StatusAgendamentoModel statusAgendamento;
 
     @Column(name = "st_conta_origem", nullable = false, length = 50)
     private String contaOrigem;

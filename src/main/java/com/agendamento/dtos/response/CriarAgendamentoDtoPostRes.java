@@ -3,12 +3,14 @@ package com.agendamento.dtos.response;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Setter
 @Getter
-public class AgendamentoCriarPostRes {
+public class CriarAgendamentoDtoPostRes {
 
     private String codigoAgendamento;
     private String contaOrigem;

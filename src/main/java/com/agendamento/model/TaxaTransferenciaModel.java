@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TaxaTransferencia {
+public class TaxaTransferenciaModel {
 
     @Id
     @Column(name = "codigo_taxa_dia_tranferencia")
