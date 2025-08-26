@@ -19,5 +19,6 @@ public class CriarAgendamentoDtoPostRes {
     private BigDecimal taxa;
     private LocalDateTime dataTransferencia;
     private LocalDateTime dataAgendamento;
+    private String statusAgendamento;
     
 }

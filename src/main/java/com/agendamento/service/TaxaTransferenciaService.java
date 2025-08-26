@@ -1,9 +1,9 @@
 package com.agendamento.service;
 
-import com.agendamento.dtos.response.TaxasTransferenciaDtoGetRes;
 import com.agendamento.mapper.TaxaTransferenciaMapper;
 import com.agendamento.model.TaxaTransferenciaModel;
 import com.agendamento.repository.TaxaTransferenciaRepository;
+import com.agendamento.dtos.response.TaxasTransferenciaDtoGetRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +28,12 @@ public class TaxaTransferenciaService {
             .collect(Collectors.toList());
     }
 
+    public TaxasTransferenciaDtoGetRes buscarPorDia(int diaDe, int diaAte) {
+        TaxaTransferenciaModel taxaTransferencia = taxaTransferenciaRepository.findByDiaDeLessThanEqualAndDiaAteGreaterThanEqual(diaDe, diaAte);
+
+        if (taxaTransferencia == null)
+            return new TaxasTransferenciaDtoGetRes();
+
+        return TaxaTransferenciaMapper.modelToTaxasTransferenciaDtoGetRes(taxaTransferencia);
+    }
 }

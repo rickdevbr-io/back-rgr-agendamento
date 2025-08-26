@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaxaTransferenciaRepository extends JpaRepository<TaxaTransferenciaModel, Integer> {
 
-
+    TaxaTransferenciaModel findByDiaDeLessThanEqualAndDiaAteGreaterThanEqual(int diaDe, int diaAte);
 }

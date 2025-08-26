@@ -4,6 +4,7 @@ import com.agendamento.dtos.request.CriarAgendamentoDtoPostReq;
 import com.agendamento.dtos.response.AgendamentoDtoGetRes;
 import com.agendamento.dtos.response.CriarAgendamentoDtoPostRes;
 import com.agendamento.model.AgendamentoModel;
+import com.agendamento.enums.StatusAgendamentoEnum;
 
 public class AgendamentoMapper {
 
@@ -12,7 +13,6 @@ public class AgendamentoMapper {
                 .contaOrigem(dto.getContaOrigem())
                 .contaDestino(dto.getContaDestino())
                 .valor(dto.getValor())
-                .taxa(dto.getTaxa())
                 .dataTransferencia(dto.getDataTransferencia())
                 .dataAgendamento(dto.getDataAgendamento())
                 .build();
@@ -27,6 +27,7 @@ public class AgendamentoMapper {
                 .taxa(model.getTaxa())
                 .dataTransferencia(model.getDataTransferencia())
                 .dataAgendamento(model.getDataAgendamento())
+                .statusAgendamento(StatusAgendamentoEnum.fromCodigo(model.getStatusAgendamento()).getNome())
                 .build();
     }
 
@@ -39,6 +40,7 @@ public class AgendamentoMapper {
                 .taxa(model.getTaxa())
                 .dataTransferencia(model.getDataTransferencia())
                 .dataAgendamento(model.getDataAgendamento())
+                .statusAgendamento(StatusAgendamentoEnum.fromCodigo(model.getStatusAgendamento()).getNome())
                 .build();
     }
 }

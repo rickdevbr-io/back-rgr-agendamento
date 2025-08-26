@@ -22,9 +22,8 @@ public class AgendamentoModel {
     @Column(name = "codigo_agendamento", length = 36)
     private String codigoAgendamento;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "codigo_status_agendamento", nullable = false)
-    private StatusAgendamentoModel statusAgendamento;
+    @Column(name = "codigo_status_agendamento", nullable = false)
+    private Integer statusAgendamento;
 
     @Column(name = "st_conta_origem", nullable = false, length = 50)
     private String contaOrigem;
