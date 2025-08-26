@@ -1,0 +1,21 @@
+package com.agendamento.dtos.response;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+public class AgendamentoCriarPostRes {
+
+    private String codigoAgendamento;
+    private String contaOrigem;
+    private String contaDestino;
+    private BigDecimal valor;
+    private BigDecimal taxa;
+    private LocalDateTime dataTransferencia;
+    private LocalDateTime dataAgendamento;
+    
+}
