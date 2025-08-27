@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class CriarAgendamentoDtoPostReq {
+public class CalcularTaxaTransferenciaDtoPostReq {
 
     @NotBlank(message = "Conta origem é obrigatória")
     private String contaOrigem;

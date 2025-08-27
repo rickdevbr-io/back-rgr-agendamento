@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.agendamento.dtos.request.CriarAgendamentoDtoPostReq;
 import com.agendamento.dtos.response.AgendamentoDtoGetRes;
 import com.agendamento.dtos.response.CriarAgendamentoDtoPostRes;
+import com.agendamento.dtos.response.CalcularTaxaTransferenciaDtoPostRes;
 import com.agendamento.dtos.response.TaxasTransferenciaDtoGetRes;
 import com.agendamento.service.TaxaTransferenciaService;
 
@@ -15,7 +16,7 @@ import java.time.temporal.ChronoUnit;
 import java.math.BigDecimal;
 
 @Service
-public class AgendamentoFacade {
+public class TransferenciaFacade {
     
     @Autowired
     private AgendamentoService agendamentoService;
@@ -23,11 +24,11 @@ public class AgendamentoFacade {
     @Autowired
     private TaxaTransferenciaService taxaTransferenciaService;
 
-    public List<AgendamentoDtoGetRes> listarTodos() {
+    public List<AgendamentoDtoGetRes> listarAgendamentos() {
         return agendamentoService.listarTodos();
     }
     
-    public CriarAgendamentoDtoPostRes criar(CriarAgendamentoDtoPostReq dto) {
+    public CriarAgendamentoDtoPostRes criarAgendamento(CriarAgendamentoDtoPostReq dto) {
 
         int dateDiff = (int) dto.getDataAgendamento().until(dto.getDataTransferencia(), ChronoUnit.DAYS);
 
@@ -47,4 +48,23 @@ public class AgendamentoFacade {
         return agendamentoService.criar(dto, valorTaxaTotal);
     }
 
+    public List<TaxasTransferenciaDtoGetRes> listarTaxasTransferencia() {
+        return taxaTransferenciaService.listarTodos();
+    }
+
+    public CalcularTaxaTransferenciaDtoPostRes calcularTaxaTransferencia(CriarAgendamentoDtoPostReq dto) {
+        int dateDiff = (int) dto.getDataAgendamento().until(dto.getDataTransferencia(), ChronoUnit.DAYS);
+
+        TaxasTransferenciaDtoGetRes taxaTransferencia = taxaTransferenciaService.buscarPorDia(dateDiff, dateDiff);
+
+        BigDecimal valorAdicional = taxaTransferencia.getTaxa();
+        BigDecimal valorTaxaTransferencia = dto.getValor().multiply(taxaTransferencia.getPorcentagem()).divide(new BigDecimal(100));
+
+        return CalcularTaxaTransferenciaDtoPostRes.builder()
+            .diaDe(taxaTransferencia.getDiaDe())
+            .diaAte(taxaTransferencia.getDiaAte())
+            .valorAdicional(valorAdicional)
+            .valorTaxaTransferencia(valorTaxaTransferencia)
+            .build();
+    }
 }
