@@ -14,6 +14,7 @@ import com.agendamento.service.TaxaTransferenciaService;
 import java.util.List;
 import java.time.temporal.ChronoUnit;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Service
 public class TransferenciaFacade {
@@ -30,12 +31,7 @@ public class TransferenciaFacade {
     
     public CriarAgendamentoDtoPostRes criarAgendamento(CriarAgendamentoDtoPostReq dto) {
 
-        int dateDiff = (int) dto.getDataAgendamento().until(dto.getDataTransferencia(), ChronoUnit.DAYS);
-
-        if (dateDiff > 50)
-            throw new IllegalArgumentException("Não há taxa aplicável para o período de agendamento, por favor, escolher uma data de transferência abaixo de 50 dias.");
-
-        TaxasTransferenciaDtoGetRes taxaTransferencia = taxaTransferenciaService.buscarPorDia(dateDiff, dateDiff);
+        TaxasTransferenciaDtoGetRes taxaTransferencia = this.buscarTaxaTransferencia(dto.getDataAgendamento(), dto.getDataTransferencia());
 
         BigDecimal valorAdicional = taxaTransferencia.getTaxa();
         BigDecimal valorTaxaTransferencia = dto.getValor().multiply(taxaTransferencia.getPorcentagem()).divide(new BigDecimal(100));
@@ -53,9 +49,8 @@ public class TransferenciaFacade {
     }
 
     public CalcularTaxaTransferenciaDtoPostRes calcularTaxaTransferencia(CriarAgendamentoDtoPostReq dto) {
-        int dateDiff = (int) dto.getDataAgendamento().until(dto.getDataTransferencia(), ChronoUnit.DAYS);
-
-        TaxasTransferenciaDtoGetRes taxaTransferencia = taxaTransferenciaService.buscarPorDia(dateDiff, dateDiff);
+       
+        TaxasTransferenciaDtoGetRes taxaTransferencia = this.buscarTaxaTransferencia(dto.getDataAgendamento(), dto.getDataTransferencia());
 
         BigDecimal valorAdicional = taxaTransferencia.getTaxa();
         BigDecimal valorTaxaTransferencia = dto.getValor().multiply(taxaTransferencia.getPorcentagem()).divide(new BigDecimal(100));
@@ -67,4 +62,16 @@ public class TransferenciaFacade {
             .valorTaxaTransferencia(valorTaxaTransferencia)
             .build();
     }
+
+    private TaxasTransferenciaDtoGetRes buscarTaxaTransferencia(LocalDateTime dataAgendamento, LocalDateTime dataTransferencia) {
+        int dateDiff = (int) dataAgendamento.until(dataTransferencia, ChronoUnit.DAYS);
+        if (dateDiff > 50)
+            throw new IllegalArgumentException("Não há taxa aplicável para o período de agendamento, por favor, escolher uma data de transferência abaixo de 50 dias.");
+
+        TaxasTransferenciaDtoGetRes taxaTransferencia = taxaTransferenciaService.buscarPorDia(dateDiff, dateDiff);
+
+        return taxaTransferencia;
+    }
+
 }
+
